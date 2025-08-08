@@ -1,0 +1,44 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Unit Tests
+        run: pytest
+
+      - name: Simulate Build Image
+        run: echo "We briefly touched on Docker I think in Unit 2 (?), but we haven't created an imagine in the course I dont think, so imagine the image being built here"
+
+      - name: Simulate Tag and Push to Registry
+        run: echo "This is where the image tagged and pushed to ECR"
+
+      - name: Integration Test Placeholder
+        run: echo "Any run integration tests would be here"
+
+      - name: Notify Slack
+        run: echo "Where we would send notification to Slack"
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Manual Approval
+        run: echo "Deployment approved"
